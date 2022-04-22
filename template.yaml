@@ -1,0 +1,31 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  sam-todo-api-array
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  TodoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/todo.handler
+      Runtime: nodejs14.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example Function URL
+      FunctionUrlConfig:
+        AuthType: NONE
+      Environment:
+        Variables:
+          MYSQL_HOST: process.env.MYSQL_HOST
+          MYSQL_USER: process.env.MYSQL_USER
+          MYSQL_PASSWORD: process.env.MYSQL_PASSWORD
+          MYSQL_DATABASE: process.env.MYSQL_DATABASE
+Outputs:
+  TodoFunctionUrl:
+    Description: "Todo Function URL"
+    Value: !GetAtt TodoFunctionUrl.FunctionUrl
